@@ -195,7 +195,7 @@ run_qc_and_doublet_removal <- function(sample.list,
 #   split_by          Metadata column to split into per-sample objects
 #   group_col         Metadata column defining condition/replicate groups
 #   k_values          NMF ranks to sweep (default: 3:10)
-#   top_n_genes       Top genes per NMF component (default: 50)
+#   top_n_genes       Top genes per NMF component (default: 60)
 #   nmf_maxit         NMF iteration limit (default: 500)
 #   overlap_threshold Minimum gene overlap to call two programs equivalent (default: 40)
 #   similarity_thr    Jaccard threshold for redundancy removal (default: 0.8)
@@ -212,7 +212,7 @@ nmf_cluster_cells <- function(
     split_by          = "sample",
     group_col         = "condition",
     k_values          = 3:10,
-    top_n_genes       = 50,
+    top_n_genes       = 60,
     nmf_maxit         = 500,
     overlap_threshold = 40,
     similarity_thr    = 0.8,
