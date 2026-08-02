@@ -158,18 +158,6 @@ curated_map <- T47D_MPs$curated_map
 # Table S2 — full MP gene assignments (before manual curation)
 save_table(curated_map, "TableS2_MP_gene_assignments_raw")
 
-# Manual curation: remove housekeeping MP and relabel
-# Adjust 'remove_mp' and the case_when below to match your dendrogram inspection
-curated_map <- filter(curated_map, MP != "MP1")
-curated_map$MP <- case_when(
-  curated_map$MP == "MP2" ~ "MP1",
-  curated_map$MP == "MP3" ~ "MP2",
-  TRUE                    ~ "MP3"
-)
-
-# Table S3 — curated MP gene assignments
-save_table(curated_map, "TableS3_MP_gene_assignments_curated")
-
 # -----------------------------
 # 8. Heatmap
 # -----------------------------
