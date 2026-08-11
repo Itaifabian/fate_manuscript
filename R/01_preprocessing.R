@@ -28,7 +28,7 @@ suppressPackageStartupMessages({
   library(RcppML)
   library(Matrix)
   library(purrr)
-  library(pheatmap)
+  library(ComplexHeatmap)
   library(RColorBrewer)
   library(fastcluster)
   library(parallelDist)
@@ -191,7 +191,7 @@ ann_colors <- list(
 
 cat("Plotting", nrow(curated_map_plot), "genes across", ncol(mat), "cells\n")
 
-ph <- pheatmap(
+ph <- ComplexHeatmap::pheatmap(
   mat,
   clustering_method = "ward.D2",
   annotation_col    = col_ann,
@@ -205,9 +205,16 @@ ph <- pheatmap(
   color             = colorRampPalette(c("#4575b4", "white", "#d73027"))(100),
   cutree_cols       = 4,
   fontsize          = 10,
-  silent            = TRUE      # suppress auto-print; we save manually
+  silent            = TRUE,
+  
+  # --- the part that matters ---
+  use_raster        = TRUE,
+  raster_device     = "agg_png",   # or "agg_png" if you have {ragg}
+  raster_quality    = 8,            # oversampling factor
+  raster_by_magick  = FALSE
 )
-save_pheatmap(ph, "Fig1H_MP_heatmap", width = 12, height = 8)
+
+save_pheatmap(ph, "Fig1G_MP_heatmap", width = 12, height = 8)
 
 # -----------------------------
 # 9. Cell-state clustering
@@ -234,7 +241,7 @@ T47D$state_cluster <- case_when(
 
 # Figure 1G — UMAP by state cluster
 p_state <- DimPlot(T47D, group.by = "state_cluster")
-save_figure(p_state, "Fig1G_UMAP_state_clusters")
+save_figure(p_state, "FigS1D_UMAP_state_clusters")
 
 # Table S4 — cell state cluster assignments
 cluster_df <- data.frame(cell = colnames(T47D), cluster = T47D$state_cluster)
@@ -313,7 +320,7 @@ Enrichment_by_cluster <- function(
 selected_pathways <- c(
   "HALLMARK_E2F_TARGETS",
   "HALLMARK_G2M_CHECKPOINT",
-  "HALLMARK_TNFA_SIGNALING_VIA_NFKB",
+  "HALLMARK_TGF_BETA_SIGNALING",
   "FRIDMAN_SENESCENCE_UP",
   "HALLMARK_INTERFERON_ALPHA_RESPONSE"
 )
@@ -324,7 +331,7 @@ enrich_out <- Enrichment_by_cluster(
   pathways      = selected_pathways
 )
 
-save_figure(enrich_out$plot, "Fig1I_pathway_enrichment_by_state_cluster", width = 8, height = 5)
+save_figure(enrich_out$plot, "Fig1H_pathway_enrichment_by_state_cluster", width = 8, height = 5)
 
 # Table S5 — full GSEA results
 save_table(
