@@ -7,22 +7,22 @@
 # -----------------------------------------------------------------------------
 # INPUT DATA
 # -----------------------------------------------------------------------------
-TENX_DIR        <- "/yoren64/users/shared_files/Itai_for_marina/filtered_feature_bc_matrix"
-HBCA_H5AD       <- "/yoren64/users/itaifabian/cell_lines/T47D_analysis/cnv/normal_reference.h5ad"
-LINEAGE_DB_PATH <- "/yoren64/users/shared_files/Itai_for_marina/lineage.db.csv"
-TF_NETWORK      <- "/yoren64/users/itaifabian/T47D_analysis/decouple/human_prior_tri.csv"
-WES_DIR         <- "/yoren64/users/itaifabian/cell_lines/T47D_analysis/WES_new/analysis/T47D_Orig"
-GTF_FILE        <- "/yoren64/users/itaifabian/OSI Bulk RNA/gencode.v38.annotation.gtf"
+TENX_DIR        <- "/path/to/your/filtered_feature_bc_matrix"
+DATA_DIR        <- "data"
+HBCA_H5AD       <- "/path/to/your/normal_reference.h5ad"
+LINEAGE_DB_PATH <- "data/lineage.db.csv"
+WES_DIR         <- "/path/to/your/WES_DIR"
+GTF_FILE        <- "/path/to/your/gencode.v38.annotation.gtf"
 
 # -----------------------------------------------------------------------------
 # INTERMEDIATE DATA (written by early steps, read by later ones)
 # -----------------------------------------------------------------------------
-INFERCNV_DIR <- "/yoren64/users/itaifabian/infercnv"
+INFERCNV_DIR <- "/path/to/your/infercnv"
 
 # -----------------------------------------------------------------------------
 # OUTPUT
 # -----------------------------------------------------------------------------
-OUTPUT_DIR <- "/yoren64/users/itaifabian/fate_manuscript/results"
+OUTPUT_DIR <- '/path/to/your/output_dir'
 FIGURES_DIR   <- file.path(OUTPUT_DIR, "figures")
 table_dir <- file.path(OUTPUT_DIR, "supplementary_tables")
 
