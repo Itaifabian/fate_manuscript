@@ -14,7 +14,7 @@ filter_de_hits <- function(de_tbl,
                            padj_max        = 0.05,
                            min_log2fc      = 1,
                            min.pct         = 0.3,
-                           ratio_threshold = 1.5,
+                           ratio_threshold = 2,
                            eps             = 1e-3) {
   de_tbl %>%
     tibble::rownames_to_column("gene") %>%
@@ -49,11 +49,21 @@ save_pheatmap <- function(ph, name,
                           dir    = get0("fig_dir", envir = parent.frame(), inherits = TRUE),
                           width  = 10, height = 8) {
   if (is.null(dir)) stop("set `fig_dir` or pass `dir` explicitly to save_pheatmap().")
+  dir.create(dir, recursive = TRUE, showWarnings = FALSE)
   path <- file.path(dir, paste0(name, ".pdf"))
+  
   pdf(path, width = width, height = height)
+  on.exit(dev.off(), add = TRUE)
+  
   grid::grid.newpage()
-  grid::grid.draw(ph$gtable)
-  dev.off()
+  if (inherits(ph, c("Heatmap", "HeatmapList"))) {
+    ComplexHeatmap::draw(ph, newpage = FALSE)
+  } else if (!is.null(ph$gtable)) {
+    grid::grid.draw(ph$gtable)
+  } else {
+    stop("unrecognised heatmap object: ", paste(class(ph), collapse = "/"))
+  }
+  
   message("Saved: ", path)
   invisible(ph)
 }
